@@ -9,7 +9,7 @@ function StreakDashboard() {
     const [rewards, setRewards] = useState([]);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
-
+    const [showAd, setShowAd] = useState(false);
     const token = localStorage.getItem('token');
 
     const loadStatus = async () => {
@@ -38,28 +38,7 @@ function StreakDashboard() {
     };
 
     const handleClaim = async () => {
-        try {
-            const response = await fetch(
-                'http://localhost:5001/api/daily-streak/claim',
-                {
-                    method: 'POST',
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || 'Claim failed');
-            }
-
-            alert(data.message);
-            loadStatus();
-        } catch (error) {
-            alert(error.message);
-        }
+        setShowAd(true);
     };
 
     useEffect(() => {
@@ -70,8 +49,6 @@ function StreakDashboard() {
         const loadRewards = async () => {
             try {
                 const data = await getRewards();
-
-                console.log('REWARDS API DATA:', data);
 
                 setRewards(Array.isArray(data) ? data : data.rewards || []);
             } catch (error) {
@@ -205,6 +182,56 @@ function StreakDashboard() {
                 </button>
 
             </div>
+
+            {showAd && (
+                <div className="card p-4 mt-4 text-center shadow">
+                    <h3>📺 CPA Ad Demo</h3>
+
+                    <p className="mt-3">
+                        Watch this demo advertisement to continue
+                        with your reward claim.
+                    </p>
+
+                    <div className="p-4 my-3 bg-secondary rounded">
+                        <h4>ADVERTISEMENT</h4>
+                        <p className="mb-0">
+                            Demo CPA Ad Placeholder
+                        </p>
+                    </div>
+
+                    <button
+                        className="btn btn-success"
+                        onClick={async () => {
+                            setShowAd(false);
+
+                            try {
+                                const response = await fetch(
+                                    'http://localhost:5001/api/daily-streak/claim',
+                                    {
+                                        method: 'POST',
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                        },
+                                    }
+                                );
+
+                                const data = await response.json();
+
+                                if (!response.ok) {
+                                    throw new Error(data.message || 'Claim failed');
+                                }
+
+                                alert(data.message);
+                                loadStatus();
+                            } catch (error) {
+                                alert(error.message);
+                            }
+                        }}
+                    >
+                        ✓ Complete Demo Ad
+                    </button>
+                </div>
+            )}
 
             <div className="mt-5">
 
