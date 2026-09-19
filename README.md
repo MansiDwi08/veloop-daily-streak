@@ -181,6 +181,16 @@ npm run dev
 
 This project demonstrates how a reward and streak system can be designed with a backend-first architecture where authentication, reward eligibility, streak progression, wallet updates, transaction records, and timing rules are controlled by the server.
 
+## Deployment
+
+The application can be deployed using:
+
+- Frontend: Vercel / Netlify
+- Backend: Render / Railway
+- Database: MongoDB Atlas
+
+Before deployment, configure the required environment variables for both frontend and backend.
+
 ## 👩‍💻 Author
 
 **Mansi Dwivedi**
