@@ -4680,27 +4680,6 @@ button {
    HERO ICON & DECORATIVE ICON POLISH
 ========================================= */
 
-/* Top decorative gift + crown */
-
-.dashboard-page .decor {
-  opacity: 0.9;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.dashboard-page .decor-left {
-  top: 82px;
-  left: -18px;
-  width: clamp(105px, 9vw, 145px);
-}
-
-.dashboard-page .decor-right {
-  top: 105px;
-  right: -18px;
-  width: clamp(105px, 9vw, 145px);
-}
-
-
 /* Hero stat icons */
 
 .dashboard-page .hero-stat-icon {
@@ -6366,5 +6345,74 @@ body {
 
   .dashboard-page .dashboard-footer {
     padding-bottom: 110px;
+  }
+}
+/* ---------- Mobile Final Cleanup ---------- */
+
+@media (max-width: 600px) {
+
+  /* Remove decorative elements around mobile greeting */
+  .mobile-greeting::before,
+  .mobile-greeting::after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+  }
+
+  /* Prevent fixed bottom nav from covering content */
+  .dashboard-page {
+    padding-bottom: 130px !important;
+  }
+
+  .dashboard-page .dashboard-footer {
+    padding-bottom: 20px !important;
+  }
+
+  /* Bottom navigation should stay compact */
+  .mobile-bottom-nav {
+    bottom: 10px;
+    left: 12px;
+    right: 12px;
+  }
+}
+/* ---------- Mobile 3-Item Bottom Nav ---------- */
+
+@media (max-width: 600px) {
+  .mobile-bottom-nav {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+/* ---------- Mobile Card Spacing Cleanup ---------- */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .mobile-greeting {
+    margin-bottom: 22px !important;
+  }
+
+  .dashboard-page .streak-hero {
+    margin-bottom: 24px !important;
+  }
+
+  .dashboard-page .today-section {
+    margin-bottom: 28px !important;
+  }
+
+  .dashboard-page .rewards-section {
+    margin-top: 28px !important;
+    margin-bottom: 28px !important;
+  }
+
+  .dashboard-page .reward-grid {
+    row-gap: 12px !important;
+  }
+
+  .dashboard-page .exclusive-section {
+    margin-top: 28px !important;
+    margin-bottom: 28px !important;
+  }
+
+  .dashboard-page .dashboard-footer {
+    margin-top: 28px !important;
   }
 }

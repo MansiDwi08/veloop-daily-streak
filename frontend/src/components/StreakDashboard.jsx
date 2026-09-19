@@ -128,19 +128,6 @@ function StreakDashboard() {
     return (
         <div className="dashboard-page">
 
-            {/* Decorative background */}
-            <img
-                src="/images/Top_Left.png"
-                className="decor decor-left"
-                alt=""
-            />
-
-            <img
-                src="/images/Top_right.png"
-                className="decor decor-right"
-                alt=""
-            />
-
             {/* Header */}
             <header className="veloop-header">
                 <div className="brand">
@@ -715,10 +702,6 @@ function StreakDashboard() {
                         <small>Wallet</small>
                     </button>
 
-                    <button onClick={() => setShowProfile(true)}>
-                        <span>👤</span>
-                        <small>Profile</small>
-                    </button>
                 </nav>
 
             </main>
