@@ -182,6 +182,20 @@ function StreakDashboard() {
 
 
             <main className="dashboard-container">
+
+                {/* Mobile Greeting */}
+                <div className="mobile-greeting">
+                    <div>
+                        <h2>Hi, {user.name || 'Mansi'} 👋</h2>
+                        <p>Keep your streak alive!</p>
+                    </div>
+
+                    <div className="mobile-coin-pill">
+                        <img src="/images/VEs_Coin.png" alt="VE Coin" />
+                        <span>{walletBalance} VE</span>
+                    </div>
+                </div>
+
                 {/* Hero */}
                 <section className="streak-hero">
 
@@ -683,6 +697,29 @@ function StreakDashboard() {
                     <span>© 2026 VELoop Rewards</span>
                     <span>Secure • Simple • Rewarding</span>
                 </footer>
+
+                {/* Mobile Bottom Navigation */}
+                <nav className="mobile-bottom-nav">
+                    <button className="active">
+                        <span>⌂</span>
+                        <small>Home</small>
+                    </button>
+
+                    <button>
+                        <span>🎁</span>
+                        <small>Rewards</small>
+                    </button>
+
+                    <button>
+                        <span>💰</span>
+                        <small>Wallet</small>
+                    </button>
+
+                    <button onClick={() => setShowProfile(true)}>
+                        <span>👤</span>
+                        <small>Profile</small>
+                    </button>
+                </nav>
 
             </main>
 
