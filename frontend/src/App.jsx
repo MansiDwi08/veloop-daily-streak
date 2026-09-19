@@ -8,8 +8,9 @@ function App() {
   const [showRegister, setShowRegister] = useState(false);
 
   const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
 
-  if (!token) {
+  if (!token || !user) {
     if (showRegister) {
       return (
           <Register

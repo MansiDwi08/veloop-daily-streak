@@ -9,6 +9,13 @@ export const getRewards = async () => {
         },
     });
 
+    if (response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.reload();
+        return;
+    }
+
     if (!response.ok) {
         throw new Error('Failed to fetch rewards');
     }

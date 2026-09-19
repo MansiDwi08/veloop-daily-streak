@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const User = require('../models/User');
 const Wallet = require('../models/Wallet');
 const Streak = require('../models/Streak');
@@ -17,6 +16,12 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'Name, email and password are required',
+      });
+    }
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters long',
       });
     }
 
@@ -52,9 +57,16 @@ router.post('/register', async (req, res) => {
       nextClaimAt: null,
     });
 
+    const token = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: '7d' }
+    );
+
     res.status(201).json({
       success: true,
       message: 'Registration successful',
+      token,
       user: {
         id: user._id,
         name: user.name,
