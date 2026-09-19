@@ -6416,3 +6416,463 @@ body {
     margin-top: 28px !important;
   }
 }
+/* ---------- Premium Streak Hero ---------- */
+
+.dashboard-page .streak-hero {
+  border-radius: 28px;
+  padding: 34px;
+  background:
+          radial-gradient(circle at 85% 20%, rgba(139, 92, 246, 0.20), transparent 35%),
+          linear-gradient(135deg, #171027 0%, #100c1d 100%);
+  border: 1px solid rgba(168, 85, 247, 0.16);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.dashboard-page .hero-label {
+  color: #a78bfa;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.dashboard-page .hero-content h1 {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin: 10px 0 14px;
+}
+
+.dashboard-page .hero-description {
+  color: #aaa5bb;
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+/* Stats */
+
+.dashboard-page .hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.dashboard-page .hero-stat {
+  min-width: 0;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.dashboard-page .hero-stat span {
+  color: #9992ad;
+}
+
+.dashboard-page .hero-stat strong {
+  color: #ffffff;
+  font-size: 15px;
+  margin-top: 3px;
+}
+
+.dashboard-page .hero-stat-icon {
+  flex-shrink: 0;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .streak-hero {
+    padding: 22px 18px;
+    border-radius: 24px;
+  }
+
+  .dashboard-page .hero-content h1 {
+    font-size: 26px;
+    letter-spacing: -0.5px;
+  }
+
+  .dashboard-page .hero-description {
+    font-size: 12px;
+  }
+
+  .dashboard-page .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 9px;
+    margin-top: 18px;
+  }
+
+  .dashboard-page .hero-stat {
+    padding: 11px;
+    border-radius: 15px;
+  }
+
+  .dashboard-page .hero-stat-icon {
+    width: 38px !important;
+    height: 38px !important;
+    flex-basis: 38px !important;
+    font-size: 18px !important;
+  }
+}
+/* ---------- Premium Today's Reward ---------- */
+
+.dashboard-page .today-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 22px;
+  background:
+          radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.16), transparent 32%),
+          linear-gradient(135deg, #171027, #100c1d);
+  border: 1px solid rgba(168, 85, 247, 0.16);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.24);
+}
+
+.dashboard-page .today-reward-left {
+  gap: 18px;
+}
+
+.dashboard-page .today-reward-icon {
+  width: 82px;
+  height: 82px;
+  flex: 0 0 82px;
+  border-radius: 20px;
+  background: rgba(139, 92, 246, 0.10);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+}
+
+.dashboard-page .today-reward-icon img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+}
+
+.dashboard-page .today-reward-info h3 {
+  font-size: 19px;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.dashboard-page .today-reward-info > p {
+  color: #c4bdd3;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.dashboard-page .countdown {
+  margin-top: 8px;
+  color: #a78bfa;
+  font-size: 12px;
+}
+
+.dashboard-page .claim-btn {
+  border: 0;
+  border-radius: 14px;
+  padding: 0 24px;
+  min-height: 48px;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-page .claim-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(124, 58, 237, 0.38);
+}
+
+.dashboard-page .claim-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .today-card {
+    padding: 17px;
+    border-radius: 21px;
+  }
+
+  .dashboard-page .today-reward-left {
+    gap: 13px;
+  }
+
+  .dashboard-page .today-reward-icon {
+    width: 64px;
+    height: 64px;
+    flex-basis: 64px;
+    border-radius: 17px;
+  }
+
+  .dashboard-page .today-reward-icon img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .dashboard-page .today-reward-info h3 {
+    font-size: 16px;
+  }
+
+  .dashboard-page .claim-btn {
+    min-height: 48px;
+    width: 100%;
+  }
+}
+/* ---------- Premium Reward Journey ---------- */
+
+.dashboard-page .reward-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 14px;
+  background: linear-gradient(145deg, #171027, #100c1d);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.dashboard-page .reward-card:hover {
+  transform: translateY(-3px);
+}
+
+.dashboard-page .reward-card.claimed {
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.dashboard-page .reward-card.current {
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 24px rgba(139, 92, 246, 0.12);
+}
+
+.dashboard-page .reward-card.locked {
+  opacity: 0.62;
+}
+
+.dashboard-page .reward-image {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.dashboard-page .reward-card h3 {
+  color: #fff;
+  font-weight: 750;
+}
+
+.dashboard-page .reward-value {
+  color: #c4b5fd;
+  font-weight: 800;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .reward-card {
+    min-height: 178px;
+    padding: 9px 6px;
+    border-radius: 16px;
+  }
+
+  .dashboard-page .reward-card:hover {
+    transform: none;
+  }
+
+  .dashboard-page .reward-image {
+    margin: 10px 0 7px;
+  }
+}
+/* ---------- Ultimate Day 7 Reward ---------- */
+
+.dashboard-page .reward-card:nth-child(7) {
+  border-color: rgba(245, 158, 11, 0.35);
+  background:
+          radial-gradient(
+                  circle at 50% 0%,
+                  rgba(245, 158, 11, 0.12),
+                  transparent 55%
+          ),
+          linear-gradient(145deg, #1b1420, #100c1d);
+}
+
+.dashboard-page .reward-card:nth-child(7) .reward-value {
+  color: #fbbf24;
+}
+
+.dashboard-page .reward-card:nth-child(7) .day-number {
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .reward-card:nth-child(7) {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.08);
+  }
+}
+/* ---------- Why Maintain Your Streak ---------- */
+
+.dashboard-page .exclusive-section {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  padding: 24px;
+  background:
+          radial-gradient(
+                  circle at 90% 20%,
+                  rgba(139, 92, 246, 0.14),
+                  transparent 40%
+          ),
+          linear-gradient(145deg, #171027, #100c1d);
+  border: 1px solid rgba(168, 85, 247, 0.14);
+}
+
+.dashboard-page .exclusive-section h2 {
+  color: #fff;
+  font-weight: 800;
+}
+
+.dashboard-page .exclusive-section p {
+  color: #aaa5bb;
+  line-height: 1.55;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .exclusive-section {
+    padding: 18px;
+    border-radius: 21px;
+  }
+
+  .dashboard-page .exclusive-section img {
+    width: 62px;
+    height: 62px;
+  }
+
+  .dashboard-page .exclusive-section h2 {
+    font-size: 17px;
+  }
+
+  .dashboard-page .exclusive-section p {
+    font-size: 11px;
+  }
+}
+/* ---------- Premium Section Headings ---------- */
+
+.dashboard-page .section-heading {
+  margin-bottom: 18px;
+}
+
+.dashboard-page .section-label {
+  color: #a78bfa;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.dashboard-page .section-heading h2 {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.dashboard-page .section-description {
+  color: #918ba4;
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .section-heading {
+    margin-bottom: 14px;
+  }
+
+  .dashboard-page .section-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .dashboard-page .section-heading h2 {
+    font-size: 21px;
+  }
+
+  .dashboard-page .section-description {
+    font-size: 11px;
+  }
+}
+/* ---------- Premium Profile Button ---------- */
+
+@media (max-width: 600px) {
+
+  .dashboard-page .profile-btn {
+    width: 40px;
+    height: 40px;
+    padding: 2px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    box-shadow: 0 0 18px rgba(139, 92, 246, 0.12);
+  }
+
+  .dashboard-page .profile-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .dashboard-page .brand {
+    letter-spacing: -0.3px;
+  }
+}
+/* ---------- Premium Bottom Navigation ---------- */
+
+@media (max-width: 600px) {
+
+  .mobile-bottom-nav {
+    padding: 7px;
+    border-radius: 22px;
+    background: rgba(17, 12, 31, 0.96);
+    border: 1px solid rgba(168, 85, 247, 0.16);
+    box-shadow:
+            0 12px 35px rgba(0, 0, 0, 0.45),
+            0 0 25px rgba(139, 92, 246, 0.06);
+    backdrop-filter: blur(18px);
+  }
+
+  .mobile-bottom-nav button {
+    min-height: 48px;
+    border-radius: 16px;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .mobile-bottom-nav button.active {
+    background: linear-gradient(
+            135deg,
+            rgba(139, 92, 246, 0.22),
+            rgba(109, 40, 217, 0.12)
+    );
+    color: #ffffff;
+  }
+
+  .mobile-bottom-nav button span {
+    font-size: 18px;
+  }
+
+  .mobile-bottom-nav button small {
+    font-size: 9px;
+    letter-spacing: 0.2px;
+  }
+}
