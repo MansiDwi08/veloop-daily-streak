@@ -1,5 +1,4 @@
-const API_BASE_URL = 'http://localhost:5001/api/daily-streak';
-
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL}/api/daily-streak`;
 export const getRewards = async () => {
     const token = localStorage.getItem('token');
 

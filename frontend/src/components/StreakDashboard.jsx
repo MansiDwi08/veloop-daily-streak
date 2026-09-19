@@ -16,7 +16,7 @@ function StreakDashboard() {
     const loadStatus = async () => {
         try {
             const response = await fetch(
-                'http://localhost:5001/api/daily-streak/status',
+                `${import.meta.env.VITE_API_BASE_URL}/api/daily-streak/status`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -454,7 +454,7 @@ function StreakDashboard() {
                                     try {
                                         const response =
                                             await fetch(
-                                                'http://localhost:5001/api/daily-streak/claim',
+                                                `${import.meta.env.VITE_API_BASE_URL}/api/daily-streak/claim`,
                                                 {
                                                     method: 'POST',
                                                     headers: {
