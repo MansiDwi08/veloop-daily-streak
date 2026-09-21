@@ -6930,3 +6930,87 @@ body {
     grid-column: auto !important;
   }
 }
+/* ---------- Final Hero Desktop Polish ---------- */
+
+/* Login-page style heading */
+.dashboard-page .hero-content h1 {
+  font-family: "DM Serif Display", Georgia, serif !important;
+  font-weight: 400 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -1px !important;
+}
+
+/* Make the hero visual larger ONLY on desktop */
+@media (min-width: 901px) {
+  .dashboard-page .hero-visual {
+    min-height: 330px;
+  }
+
+  .dashboard-page .hero-visual img {
+    width: 115% !important;
+    max-width: 560px !important;
+    height: auto !important;
+    object-fit: contain;
+    transform: scale(1.12);
+  }
+}
+
+/* Mobile stays as it is */
+@media (max-width: 900px) {
+  .dashboard-page .hero-visual img {
+    transform: none;
+  }
+}
+/* ---------- Desktop Bottom Navigation ---------- */
+
+@media (min-width: 601px) {
+
+  .dashboard-page .mobile-bottom-nav {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    width: 360px;
+    z-index: 1000;
+
+    padding: 7px;
+    border-radius: 22px;
+
+    background: rgba(17, 12, 31, 0.96);
+    border: 1px solid rgba(168, 85, 247, 0.18);
+
+    box-shadow:
+            0 12px 35px rgba(0, 0, 0, 0.45),
+            0 0 25px rgba(139, 92, 246, 0.08);
+
+    backdrop-filter: blur(18px);
+  }
+
+  .dashboard-page .mobile-bottom-nav button {
+    min-height: 52px;
+    border-radius: 16px;
+  }
+
+  .dashboard-page .mobile-bottom-nav button.active {
+    background: linear-gradient(
+            135deg,
+            rgba(139, 92, 246, 0.25),
+            rgba(109, 40, 217, 0.14)
+    );
+  }
+
+  .dashboard-page .mobile-bottom-nav button span {
+    font-size: 19px;
+  }
+
+  .dashboard-page .mobile-bottom-nav button small {
+    font-size: 10px;
+  }
+
+  /* Keep page content clear of the fixed navigation */
+  .dashboard-page {
+    padding-bottom: 100px;
+  }
+}
