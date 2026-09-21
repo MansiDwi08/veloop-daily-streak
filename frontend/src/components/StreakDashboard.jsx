@@ -896,7 +896,8 @@ function StreakDashboard() {
                     <span>Secure • Simple • Rewarding</span>
                 </footer>
 
-                <nav className="mobile-bottom-nav">
+                {!showProfile && !showTransactions && !showWallet && (
+                    <nav className="mobile-bottom-nav">
                     <button
                         className="active"
                         onClick={() =>
@@ -928,6 +929,8 @@ function StreakDashboard() {
                         <small>Wallet</small>
                     </button>
                 </nav>
+
+                    )}
 
             </main>
 

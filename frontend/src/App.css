@@ -7346,3 +7346,6 @@ body {
 .wallet-history-header button:hover {
   color: #d8b4fe;
 }
+.profile-drawer-header h2 {
+  color: #ffffff !important;
+}
