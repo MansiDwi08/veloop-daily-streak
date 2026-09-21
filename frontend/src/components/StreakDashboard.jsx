@@ -10,6 +10,8 @@ function StreakDashboard() {
     const [message, setMessage] = useState('');
     const [showAd, setShowAd] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
+    const [transactions, setTransactions] = useState([]);
+    const [showTransactions, setShowTransactions] = useState(false);
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -38,12 +40,38 @@ function StreakDashboard() {
         }
     };
 
+    const loadTransactions = async () => {
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_BASE_URL}/api/daily-streak/history`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message || 'Unable to load transactions'
+                );
+            }
+
+            setTransactions(data.transactions || []);
+        } catch (error) {
+            console.error('Error loading transactions:', error);
+        }
+    };
+
     const handleClaim = () => {
         setShowAd(true);
     };
 
     useEffect(() => {
         loadStatus();
+        loadTransactions();
     }, []);
 
     useEffect(() => {
@@ -385,8 +413,7 @@ function StreakDashboard() {
 
                                 <button
                                     onClick={() => {
-                                        setShowProfile(false);
-                                        alert('Transaction history will be available here.');
+                                        setShowTransactions(true);
                                     }}
                                 >
                                     <span>📜</span>
@@ -418,6 +445,83 @@ function StreakDashboard() {
                             >
                                 🚪 Logout
                             </button>
+
+                        </aside>
+                    </>
+                )}
+
+                {/* Transaction History */}
+                {showTransactions && (
+                    <>
+                        <div
+                            className="profile-overlay"
+                            onClick={() => setShowTransactions(false)}
+                        ></div>
+
+                        <aside className="profile-drawer transaction-drawer">
+
+                            <div className="profile-drawer-header">
+                                <div>
+                                    <p className="section-label">WALLET ACTIVITY</p>
+                                    <h2>Transaction History</h2>
+                                </div>
+
+                                <button
+                                    className="profile-close"
+                                    onClick={() => setShowTransactions(false)}
+                                >
+                                    ×
+                                </button>
+                            </div>
+
+                            {transactions.length === 0 ? (
+                                <div className="transaction-empty">
+                                    <div>📜</div>
+                                    <h3>No transactions yet</h3>
+                                    <p>
+                                        Your daily streak reward transactions
+                                        will appear here.
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="transaction-list">
+                                    {transactions.map((transaction) => (
+                                        <div
+                                            className="transaction-item"
+                                            key={transaction._id || transaction.transactionId}
+                                        >
+                                            <div className="transaction-icon">
+                                                {transaction.rewardType === 'VE'
+                                                    ? '🪙'
+                                                    : '🎁'}
+                                            </div>
+
+                                            <div className="transaction-info">
+                                                <strong>
+                                                    {transaction.rewardType === 'VE'
+                                                        ? `+${transaction.amount} VE`
+                                                        : transaction.rewardType}
+                                                </strong>
+
+                                                <small>
+                                                    Day {transaction.streakDay} •{' '}
+                                                    {new Date(
+                                                        transaction.createdAt
+                                                    ).toLocaleString()}
+                                                </small>
+
+                                                <small>
+                                                    ID: {transaction.transactionId}
+                                                </small>
+                                            </div>
+
+                                            <span className="transaction-status">
+                                ✓
+                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
 
                         </aside>
                     </>
@@ -686,23 +790,41 @@ function StreakDashboard() {
                     <span>Secure • Simple • Rewarding</span>
                 </footer>
 
-                {/* Mobile Bottom Navigation */}
                 <nav className="mobile-bottom-nav">
-                    <button className="active">
+                    <button
+                        className="active"
+                        onClick={() =>
+                            window.scrollTo({
+                                top: 0,
+                                behavior: 'smooth'
+                            })
+                        }
+                    >
                         <span>⌂</span>
                         <small>Home</small>
                     </button>
 
-                    <button>
+                    <button
+                        onClick={() =>
+                            document
+                                .querySelector('.rewards-section')
+                                ?.scrollIntoView({ behavior: 'smooth' })
+                        }
+                    >
                         <span>🎁</span>
                         <small>Rewards</small>
                     </button>
 
-                    <button>
+                    <button
+                        onClick={() =>
+                            document
+                                .querySelector('.wallet-section')
+                                ?.scrollIntoView({ behavior: 'smooth' })
+                        }
+                    >
                         <span>💰</span>
                         <small>Wallet</small>
                     </button>
-
                 </nav>
 
             </main>
