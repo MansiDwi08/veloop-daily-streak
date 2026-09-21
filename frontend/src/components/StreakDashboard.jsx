@@ -193,8 +193,9 @@ function StreakDashboard() {
                         </p>
 
                         <h1>
-                            Login Daily &<br />
-                            Earn Bigger Rewards!
+                            Login Daily
+                            <br />
+                            <span>Earn Bigger Rewards!</span>
                         </h1>
 
                         <p className="hero-description">
