@@ -12,6 +12,7 @@ function StreakDashboard() {
     const [showProfile, setShowProfile] = useState(false);
     const [transactions, setTransactions] = useState([]);
     const [showTransactions, setShowTransactions] = useState(false);
+    const [showWallet, setShowWallet] = useState(false);
     const token = localStorage.getItem('token');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
 
@@ -527,6 +528,116 @@ function StreakDashboard() {
                     </>
                 )}
 
+                {/* Wallet Drawer */}
+                {showWallet && (
+                    <>
+                        <div
+                            className="profile-overlay"
+                            onClick={() => setShowWallet(false)}
+                        ></div>
+
+                        <aside className="profile-drawer wallet-drawer">
+
+                            <div className="profile-drawer-header">
+                                <div>
+                                    <p className="section-label">MY WALLET</p>
+                                    <h2>Wallet</h2>
+                                </div>
+
+                                <button
+                                    className="profile-close"
+                                    onClick={() => setShowWallet(false)}
+                                >
+                                    ×
+                                </button>
+                            </div>
+
+                            <div className="wallet-balance-card">
+                                <span>Available Balance</span>
+
+                                <strong>
+                                    {walletBalance} {walletCurrency}
+                                </strong>
+
+                                <small>Daily streak rewards</small>
+                            </div>
+
+                            <div className="wallet-summary">
+                                <div>
+                                    <span>Total Transactions</span>
+                                    <strong>{transactions.length}</strong>
+                                </div>
+
+                                <div>
+                                    <span>Current Streak</span>
+                                    <strong>{currentStreak} Days</strong>
+                                </div>
+                            </div>
+
+                            <div className="wallet-history-header">
+                                <h3>Recent Activity</h3>
+
+                                <button
+                                    onClick={() => {
+                                        setShowWallet(false);
+                                        setShowTransactions(true);
+                                    }}
+                                >
+                                    View All
+                                </button>
+                            </div>
+
+                            {transactions.length === 0 ? (
+                                <div className="transaction-empty">
+                                    <div>💰</div>
+                                    <h3>No wallet activity</h3>
+                                    <p>
+                                        Your earned rewards will appear here.
+                                    </p>
+                                </div>
+                            ) : (
+                                <div className="transaction-list">
+                                    {transactions.slice(0, 5).map((transaction) => (
+                                        <div
+                                            className="transaction-item"
+                                            key={
+                                                transaction._id ||
+                                                transaction.transactionId
+                                            }
+                                        >
+                                            <div className="transaction-icon">
+                                                🪙
+                                            </div>
+
+                                            <div className="transaction-info">
+                                                <strong>
+                                                    +{transaction.amount}{' '}
+                                                    {transaction.currency}
+                                                </strong>
+
+                                                <small>
+                                                    Day {transaction.streakDay}
+                                                </small>
+
+                                                <small>
+                                                    {new Date(
+                                                        transaction.createdAt
+                                                    ).toLocaleDateString()}
+                                                </small>
+                                            </div>
+
+                                            <span className="transaction-status">
+                                ✓
+                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                        </aside>
+                    </>
+                )}
+
                 {/* CPA Demo */}
                 {showAd && (
                     <section className="ad-section">
@@ -811,11 +922,7 @@ function StreakDashboard() {
                     </button>
 
                     <button
-                        onClick={() =>
-                            document
-                                .querySelector('.wallet-section')
-                                ?.scrollIntoView({ behavior: 'smooth' })
-                        }
+                        onClick={() => setShowWallet(true)}
                     >
                         <span>💰</span>
                         <small>Wallet</small>
