@@ -6876,3 +6876,57 @@ body {
     letter-spacing: 0.2px;
   }
 }
+@media (max-width: 600px) {
+  .dashboard-page .profile-btn {
+    width: 42px !important;
+    height: 42px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  .dashboard-page .profile-avatar {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+}
+/* ---------- Dashboard Hero Heading - Login Style ---------- */
+
+.dashboard-page .hero-content h1 {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.8px;
+  line-height: 1.08;
+}
+
+@media (max-width: 600px) {
+  .dashboard-page .hero-content h1 {
+    font-size: 36px;
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+  }
+}
+@media (max-width: 600px) {
+
+  .dashboard-page .reward-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .dashboard-page .reward-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    min-height: 150px !important;
+    height: 150px !important;
+  }
+
+  /* Remove old 4-column-specific sizing */
+  .dashboard-page .reward-card:nth-child(n + 5) {
+    grid-column: auto !important;
+  }
+}
