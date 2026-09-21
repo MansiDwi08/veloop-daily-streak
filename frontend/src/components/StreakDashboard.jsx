@@ -701,11 +701,6 @@ function StreakDashboard() {
                                         {reward.title}
                                     </h3>
 
-                                    <p className="reward-value">
-                                        {reward.amount}{' '}
-                                        {reward.currency}
-                                    </p>
-
                                 </div>
                             );
                         })}
