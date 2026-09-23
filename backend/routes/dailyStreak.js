@@ -5,7 +5,7 @@ const Streak = require('../models/Streak');
 const Wallet = require('../models/Wallet');
 const WalletTransaction = require('../models/WalletTransaction');
 const authMiddleware = require('../middleware/auth');
-
+const mongoose = require('mongoose');
 const router = express.Router();
 router.use(authMiddleware);
 // Get all daily streak rewards
@@ -107,138 +107,212 @@ router.get('/status', async (req, res) => {
 
 // Claim today's streak reward
 router.post('/claim', async (req, res) => {
-  try {
-    const user = await User.findById(req.user.userId);
+  const session = await mongoose.startSession();
 
-    if (!user) {
+  try {
+    let result;
+
+    await session.withTransaction(async () => {
+      const user = await User.findById(req.user.userId).session(session);
+
+      if (!user) {
+        throw new Error('USER_NOT_FOUND');
+      }
+
+      const streak = await Streak.findOne({
+        userId: user._id,
+      }).session(session);
+
+      const wallet = await Wallet.findOne({
+        userId: user._id,
+      }).session(session);
+
+      if (!streak || !wallet) {
+        throw new Error('STREAK_OR_WALLET_NOT_FOUND');
+      }
+
+      const now = new Date();
+
+      // Backend controls eligibility
+      if (streak.nextClaimAt !== null) {
+        // Claim window expired - reset streak
+        if (now > streak.nextClaimAt) {
+          streak.currentStreak = 1;
+          streak.currentDay = 1;
+          streak.lastClaimAt = null;
+          streak.nextClaimAt = null;
+          streak.status = 'ACTIVE';
+
+          await streak.save({ session });
+        } else {
+          throw new Error('REWARD_LOCKED');
+        }
+      }
+
+      const claimedDay = streak.currentDay;
+
+      // Prevent duplicate claim for the same streak day
+      const existingTransaction = await WalletTransaction.findOne({
+        userId: user._id,
+        source: 'DAILY_STREAK',
+        cycleId: streak.cycleId,
+        streakDay: claimedDay,
+      }).session(session);
+
+      if (existingTransaction) {
+        throw new Error('ALREADY_CLAIMED');
+      }
+
+      const reward = await StreakReward.findOne({
+        day: claimedDay,
+        isActive: true,
+      }).session(session);
+
+      if (!reward) {
+        throw new Error('REWARD_NOT_FOUND');
+      }
+
+      const balanceBefore = wallet.balance;
+
+      // Add VE reward to wallet
+      if (reward.rewardType === 'VE') {
+        wallet.balance += reward.amount;
+
+        await wallet.save({ session });
+      }
+
+      const balanceAfter = wallet.balance;
+
+      const timestamp = Date.now();
+
+      const transactionId = `STREAK-${user._id}-${claimedDay}-${timestamp}`;
+      const referenceId = `DAY-${claimedDay}-${timestamp}`;
+
+      await WalletTransaction.create(
+          [
+            {
+              transactionId,
+              userId: user._id,
+              rewardType: reward.rewardType,
+              rewardStatus:
+                  reward.rewardType === 'VE'
+                      ? 'CREDITED'
+                      : 'PENDING',
+              amount: reward.amount,
+              currency: reward.currency,
+              source: 'DAILY_STREAK',
+              streakDay: claimedDay,
+              cycleId: streak.cycleId,
+              referenceId,
+              balanceBefore,
+              balanceAfter,
+            },
+          ],
+          { session }
+      );
+
+      streak.lastClaimAt = now;
+
+      // Move to next day
+      if (claimedDay < 7) {
+        streak.currentDay = claimedDay + 1;
+        streak.currentStreak += 1;
+
+        // 24-hour backend-controlled lock
+        streak.nextClaimAt = new Date(
+            now.getTime() + 24 * 60 * 60 * 1000
+        );
+      } else {
+        streak.status = 'COMPLETED';
+        streak.nextClaimAt = null;
+      }
+
+      await streak.save({ session });
+
+      result = {
+        reward,
+        wallet: {
+          balance: wallet.balance,
+          currency: wallet.currency,
+        },
+        streak: {
+          currentStreak: streak.currentStreak,
+          currentDay: streak.currentDay,
+          status: streak.status,
+          nextClaimAt: streak.nextClaimAt,
+        },
+        transactionId,
+        claimedDay,
+      };
+    });
+
+    return res.json({
+      success: true,
+      message: `Day ${result.claimedDay} reward claimed successfully`,
+      reward: result.reward,
+      wallet: result.wallet,
+      streak: result.streak,
+      transactionId: result.transactionId,
+    });
+  } catch (error) {
+    console.error(
+        'Error claiming streak reward:',
+        error.message
+    );
+
+    if (error.message === 'USER_NOT_FOUND') {
       return res.status(404).json({
         success: false,
         message: 'Test user not found',
       });
     }
 
-    const streak = await Streak.findOne({
-      userId: user._id,
-    });
-
-    const wallet = await Wallet.findOne({
-      userId: user._id,
-    });
-
-    if (!streak || !wallet) {
+    if (error.message === 'STREAK_OR_WALLET_NOT_FOUND') {
       return res.status(404).json({
         success: false,
         message: 'Streak or wallet not found',
       });
     }
 
-    // Backend controls eligibility
-    // Backend controls eligibility
-    if (streak.nextClaimAt !== null) {
-      const now = new Date();
+    if (error.message === 'REWARD_LOCKED') {
+      const streak = await Streak.findOne({
+        userId: req.user.userId,
+      });
 
-      // Claim window expired - reset streak
-      if (now > streak.nextClaimAt) {
-        streak.currentStreak = 1;
-        streak.currentDay = 1;
-        streak.lastClaimAt = null;
-        streak.nextClaimAt = null;
-        streak.status = 'ACTIVE';
-
-        await streak.save();
-      } else {
-        return res.status(400).json({
-          success: false,
-          message: 'Reward is currently locked',
-          nextClaimAt: streak.nextClaimAt,
-        });
-      }
+      return res.status(400).json({
+        success: false,
+        message: 'Reward is currently locked',
+        nextClaimAt: streak?.nextClaimAt || null,
+      });
     }
 
-    const reward = await StreakReward.findOne({
-      day: streak.currentDay,
-      isActive: true,
-    });
+    if (error.message === 'ALREADY_CLAIMED') {
+      return res.status(400).json({
+        success: false,
+        message: 'Today’s reward has already been claimed',
+      });
+    }
 
-    if (!reward) {
+    if (error.message === 'REWARD_NOT_FOUND') {
       return res.status(404).json({
         success: false,
         message: 'Reward not found',
       });
     }
 
-    const balanceBefore = wallet.balance;
-
-    // Add VE reward to wallet
-    if (reward.rewardType === 'VE') {
-      wallet.balance += reward.amount;
-      await wallet.save();
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Today’s reward has already been claimed',
+      });
     }
 
-    const balanceAfter = wallet.balance;
-
-    const transactionId = `STREAK-${Date.now()}`;
-    const referenceId = `DAY-${streak.currentDay}-${Date.now()}`;
-
-    await WalletTransaction.create({
-      transactionId,
-      userId: user._id,
-      rewardType: reward.rewardType,
-      rewardStatus: reward.rewardType === 'VE'
-          ? 'CREDITED'
-          : 'PENDING',
-      amount: reward.amount,
-      currency: reward.currency,
-      source: 'DAILY_STREAK',
-      streakDay: streak.currentDay,
-      referenceId,
-      balanceBefore,
-      balanceAfter,
-    });
-
-    const claimedDay = streak.currentDay;
-
-    streak.lastClaimAt = new Date();
-
-    // Move to next day
-    if (streak.currentDay < 7) {
-      streak.currentDay += 1;
-      streak.currentStreak += 1;
-
-      // 24-hour backend-controlled lock
-      streak.nextClaimAt = new Date(
-        Date.now() + 24 * 60 * 60 * 1000
-      );
-    } else {
-      streak.status = 'COMPLETED';
-      streak.nextClaimAt = null;
-    }
-
-    await streak.save();
-
-    res.json({
-      success: true,
-      message: `Day ${claimedDay} reward claimed successfully`,
-      reward,
-      wallet: {
-        balance: wallet.balance,
-        currency: wallet.currency,
-      },
-      streak: {
-        currentStreak: streak.currentStreak,
-        currentDay: streak.currentDay,
-        status: streak.status,
-        nextClaimAt: streak.nextClaimAt,
-      },
-      transactionId,
-    });
-  } catch (error) {
-    console.error('Error claiming streak reward:', error.message);
-
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: 'Failed to claim streak reward',
     });
+  } finally {
+    await session.endSession();
   }
 });
 

@@ -159,41 +159,28 @@ function StreakDashboard() {
 
             {/* Header */}
             <header className="veloop-header">
-                <div className="brand">
-                    <span className="brand-dot"></span>
-                    <span>VELoop</span>
+
+                <button
+                    className="streak-back-btn"
+                    onClick={() => window.history.back()}
+                    aria-label="Go back"
+                >
+                    ‹
+                </button>
+
+                <div className="streak-page-title">
+                    <span>Daily Streak</span>
+                    <span>🔥</span>
                 </div>
 
-                <div className="header-actions">
-
-                    <div className="header-status">
-                        <span>Daily Rewards</span>
-                    </div>
-
-                    <button
-                        className="profile-btn"
-                        onClick={() => setShowProfile(true)}
-                        aria-label="Open profile"
-                    >
-                        <img
-                            className="profile-avatar"
-                            src="/images/profile-placeholder.png"
-                            alt="Profile"
-                            onError={(e) => {
-                                e.currentTarget.style.display = 'none';
-                                e.currentTarget.nextElementSibling.style.display = 'flex';
-                            }}
-                        />
-
-                        <span
-                            className="profile-avatar-fallback"
-                            style={{ display: 'none' }}
-                        >
-                              M
-                        </span>
-                    </button>
-
+                <div className="header-wallet">
+                    <img
+                        src="/images/VEs_Coin.png"
+                        alt="VE"
+                    />
+                    <strong>{walletBalance}</strong>
                 </div>
+
             </header>
 
 
@@ -215,143 +202,132 @@ function StreakDashboard() {
                 {/* Hero */}
                 <section className="streak-hero">
 
-                    <div className="hero-content">
-
-                        <p className="hero-label">
-                            DAILY STREAK
-                        </p>
-
-                        <h1>
-                            Login Daily
-                            <br />
-                            <span>Earn Bigger Rewards!</span>
-                        </h1>
-
-                        <p className="hero-description">
-                            Keep your streak alive, check in every day,
-                            and unlock bigger rewards with VELoop.
-                        </p>
-
-                        <div className="hero-stats">
-
-                            <div className="hero-stat">
-                                <span className="hero-stat-icon">🎁</span>
-
-                                <div>
-                                    <span>Total Rewards</span>
-                                    <strong>7 Days</strong>
-                                </div>
-                            </div>
-
-                            <div className="hero-stat">
-                                <span className="hero-stat-icon">🔥</span>
-
-                                <div>
-                                    <span>Checked In</span>
-                                    <strong>
-                                        {currentStreak} {currentStreak === 1 ? 'Day' : 'Days'}
-                                    </strong>
-                                </div>
-                            </div>
-
-                            <div className="hero-stat">
-                                <span className="hero-stat-icon">💰</span>
-
-                                <div>
-                                    <span>Wallet Balance</span>
-                                    <strong>
-                                        {walletBalance} {walletCurrency}
-                                    </strong>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div className="hero-visual">
-                        <img
-                            src="/images/Bigger_Streak.png"
-                            alt="Daily streak rewards"
-                        />
-                    </div>
+                    <img
+                        className="hero-banner-image"
+                        src="/images/Mobile_Hero.png"
+                        alt="Login daily and earn bigger rewards"
+                    />
 
                 </section>
 
-                {/* Today's reward */}
-                <section className="today-section">
+                {/* Streak Summary */}
+                <section className="streak-main-card">
+                <section className="streak-summary">
 
-                    <div className="section-heading">
-                        <div>
-                            <p className="section-label">
-                                TODAY'S REWARD
-                            </p>
+                    <div className="streak-summary-top">
 
-                            <h2>
-                                Day {currentDay}
-                            </h2>
+                        <div className="streak-days-badge">
+                            🔥 {currentStreak} Day Streak
                         </div>
 
-                        <span className="current-badge">
-            ● CURRENT
-        </span>
-                    </div>
-
-                    <div className="today-card">
-
-                        <div className="today-reward-left">
-
-                            <div className="today-reward-icon">
-                                {currentDay === 4 ||
-                                currentDay === 5 ||
-                                currentDay === 7 ? (
-                                    <img
-                                        src={`/images/Day-${currentDay}.png`}
-                                        alt={`Day ${currentDay} reward`}
-                                    />
-                                ) : (
-                                    <img
-                                        src="/images/VEs_Coin.png"
-                                        alt="VE Coin"
-                                    />
-                                )}
-                            </div>
-
-                            <div className="today-reward-info">
-
-                                <h3>
-                                    {status.today.reward.title}
-                                </h3>
-
-                                <p>
-                                    {status.today.reward.amount}{' '}
-                                    {status.today.reward.currency}
-                                </p>
-
-                                {countdown && !status.today.eligible && (
-                                    <div className="countdown">
-                                        ⏳ Next reward in{' '}
-                                        <strong>{countdown}</strong>
-                                    </div>
-                                )}
-
-                            </div>
-
-                        </div>
-
-                        <button
-                            className="claim-btn"
-                            disabled={!status.today.eligible}
-                            onClick={handleClaim}
-                        >
-                            {status.today.eligible
-                                ? "Claim Reward"
-                                : "Reward Locked"}
+                        <button className="streak-calendar-btn">
+                            📅 Streak Calendar
+                            <span>›</span>
                         </button>
 
                     </div>
 
+                    <div className="summary-cards">
+
+                        <div className="summary-card">
+                            <div className="summary-icon purple">
+                                📅
+                            </div>
+
+                            <div>
+                                <span>Total Rewards</span>
+                                <strong>7</strong>
+                            </div>
+                        </div>
+
+                        <div className="summary-card">
+                            <div className="summary-icon green">
+                                ✓
+                            </div>
+
+                            <div>
+                                <span>Checked In</span>
+                                <strong>{currentStreak}</strong>
+                            </div>
+                        </div>
+
+                        <div className="summary-card">
+                            <div className="summary-icon gold">
+                                ★
+                            </div>
+
+                            <div>
+                                <span>Next Reward</span>
+                                <strong>
+                                    {currentDay < 7
+                                        ? `+${rewards.find(
+                                            r => r.day === currentDay + 1
+                                        )?.amount || 0} VEs`
+                                        : '₹5'}
+                                </strong>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </section>
+
+
+                {/* Ultimate Reward */}
+                <section className="ultimate-reward-section">
+
+                    <div className="ultimate-reward-card">
+
+                        <div className="ultimate-reward-image">
+                            <img
+                                src="/images/Day-7.png"
+                                alt="Ultimate Reward"
+                            />
+                        </div>
+
+                        <div className="ultimate-reward-info">
+
+                            <h3>Ultimate Reward</h3>
+
+                            <strong>₹5</strong>
+
+                            <div className="amazon-label">
+                                <span>𝒂</span>
+                                Amazon Gift Card
+                            </div>
+
+                        </div>
+
+                        <div className="ultimate-unlock">
+
+                            <div className="lock-circle">
+                                🔒
+                            </div>
+
+                            <span>Unlock on</span>
+                            <strong>Day 7</strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                {/* Come Back Message */}
+                <div className="come-back-message">
+                    <span>✦</span>
+
+                    <div>
+                        <strong>Come back tomorrow for more rewards!</strong>
+                    </div>
+
+                    <span>✦</span>
+                </div>
+
+                </section>
+
+
                 {/* Profile Drawer */}
                 {showProfile && (
                     <>
@@ -717,26 +693,6 @@ function StreakDashboard() {
 
                 {/* 7 Day Rewards */}
                 <section className="rewards-section">
-
-                    <div className="section-heading centered">
-
-                        <div>
-                            <p className="section-label">
-                                REWARD JOURNEY
-                            </p>
-
-                            <h2>
-                                7 Days. 7 Rewards.
-                            </h2>
-
-                            <p className="section-description">
-                                Complete each day to keep moving
-                                forward.
-                            </p>
-                        </div>
-
-                    </div>
-
                     <div className="reward-grid">
 
                         {rewards.map((reward) => {
@@ -789,7 +745,7 @@ function StreakDashboard() {
 
                                         {isCurrent && (
                                             <span className="status-badge current-badge-small">
-                                                NOW
+                                                Today
                                             </span>
                                         )}
 
@@ -809,9 +765,58 @@ function StreakDashboard() {
                                     </div>
 
                                     <h3>
-                                        {reward.title}
+                                        {reward.day === 7
+                                            ? 'Ultimate Reward'
+                                            : 'Daily Reward'}
                                     </h3>
 
+                                    <div className="reward-value">
+                                        {reward.rewardType === 'GIFT_CARD'
+                                            ? `₹${reward.amount}`
+                                            : `+${reward.amount}`}
+                                    </div>
+
+                                    <p className="reward-description">
+                                        {reward.rewardType === 'GIFT_CARD'
+                                            ? 'Amazon Gift Card'
+                                            : `${reward.amount} VEs`}
+                                    </p>
+
+                                    {isClaimed && (
+                                        <button className="reward-action claimed-action" disabled>
+                                            ✓ Claimed
+                                        </button>
+                                    )}
+
+                                    {isCurrent && status.today.eligible && (
+                                        <button
+                                            className="reward-action claim-action"
+                                            onClick={handleClaim}
+                                        >
+                                            Claim Now
+                                        </button>
+                                    )}
+
+                                    {isCurrent && !status.today.eligible && (
+                                        <button
+                                            className="reward-action locked-action"
+                                            disabled
+                                        >
+                                            🔒 Locked
+                                        </button>
+                                    )}
+
+                                    {reward.day === currentDay && !status.today.eligible && countdown && (
+                                        <div className="reward-countdown">
+                                            ⏳ Next reward in {countdown}
+                                        </div>
+                                    )}
+
+                                    {isLocked && (
+                                        <button className="reward-action locked-action" disabled>
+                                            🔒 Locked
+                                        </button>
+                                    )}
                                 </div>
                             );
                         })}
@@ -823,71 +828,90 @@ function StreakDashboard() {
                 {/* Bottom feature cards */}
                 <section className="feature-section">
 
-                    <div className="feature-card">
-
-                        <img
-                            src="/images/Stay_Active.png"
-                            alt="Stay active"
-                        />
-
-                        <div>
-                            <h3>
-                                Stay Active
-                            </h3>
-
-                            <p>
-                                Check in every day and keep
-                                building your streak.
-                            </p>
-                        </div>
-
+                    <div className="feature-section-heading">
+                        <h2>✦ Why Maintain Your Streak? ✦</h2>
                     </div>
 
-                    <div className="feature-card">
+                    <div className="feature-grid">
 
-                        <img
-                            src="/images/Trust.png"
-                            alt="Secure rewards"
-                        />
+                        <div className="feature-card">
+                            <img
+                                src="/images/Stay_Active.png"
+                                alt="Stay Active"
+                            />
 
-                        <div>
-                            <h3>
-                                Secure Rewards
-                            </h3>
+                            <div>
+                                <h3>Stay Active</h3>
+                                <p>
+                                    Keep your streak alive & earn more!
+                                </p>
+                            </div>
+                        </div>
 
-                            <p>
-                                Your rewards and transactions
-                                are controlled by the backend.
-                            </p>
+                        <div className="feature-card">
+                            <img
+                                src="/images/Bigger_Streak.png"
+                                alt="Bigger Streak"
+                            />
+
+                            <div>
+                                <h3>Bigger Streak</h3>
+                                <p>
+                                    More consecutive logins, bigger rewards!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="feature-card">
+                            <img
+                                src="/images/Exclusive-reward.png"
+                                alt="Exclusive Rewards"
+                            />
+
+                            <div>
+                                <h3>Exclusive Rewards</h3>
+                                <p>
+                                    Get coins, gift cards & special bonuses!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="feature-card">
+                            <img
+                                src="/images/Trust.png"
+                                alt="Don't Miss Out"
+                            />
+
+                            <div>
+                                <h3>Don't Miss Out</h3>
+                                <p>
+                                    Come back every day & unlock all rewards!
+                                </p>
+                            </div>
                         </div>
 
                     </div>
 
                 </section>
 
-                {/* Exclusive reward */}
-                <section className="exclusive-section">
-
-                    <img
-                        src="/images/Exclusive-reward.png"
-                        alt="Exclusive rewards"
-                    />
+                {/* Official VeloopRewards Banner */}
+                <section className="official-banner">
 
                     <div>
                         <p className="section-label">
-                            KEEP GOING
+                            OFFICIAL WEBSITE
                         </p>
 
                         <h2>
-                            Unlock exclusive rewards
+                            VeloopRewards.in
                         </h2>
 
                         <p>
-                            Don't break your streak. Every
-                            consecutive day brings you closer
-                            to the next reward.
+                            Stay active, stay rewarded!
                         </p>
                     </div>
+
+                    <span>›</span>
 
                 </section>
 

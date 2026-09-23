@@ -45,6 +45,12 @@ const walletTransactionSchema = new mongoose.Schema(
             required: true,
         },
 
+        cycleId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: 'Streak',
+        },
+
         referenceId: {
             type: String,
             required: true,
@@ -62,6 +68,22 @@ const walletTransactionSchema = new mongoose.Schema(
     },
     {
         timestamps: true,
+    }
+);
+
+walletTransactionSchema.index(
+    {
+        userId: 1,
+        source: 1,
+        cycleId: 1,
+        streakDay: 1,
+    },
+    {
+        unique: true,
+        partialFilterExpression: {
+            source: 'DAILY_STREAK',
+            cycleId: { $exists: true },
+        },
     }
 );
 

@@ -8,6 +8,12 @@ const streakSchema = new mongoose.Schema(
             ref: 'User',
         },
 
+        cycleId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            default: () => new mongoose.Types.ObjectId(),
+        },
+
         currentStreak: {
             type: Number,
             default: 1,
