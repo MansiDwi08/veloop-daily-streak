@@ -12703,11 +12703,30 @@ body {
   }
 }
 .dashboard-page .reward-countdown {
-  margin-top: 5px;
-  font-size: 7px;
-  color: #f5c84c;
-  text-align: center;
-  white-space: nowrap;
+  margin-top: 4px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  font-size: 7px !important;
+  line-height: 1.2 !important;
+  color: #f5c84c !important;
+  text-align: center !important;
+  white-space: normal !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  min-height: 9px !important;
+}
+
+.dashboard-page .reward-card {
+  min-height: 230px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.dashboard-page .reward-card .reward-action {
+  flex-shrink: 0 !important;
 }
 
 @media screen and (max-width: 600px) {
@@ -14262,5 +14281,18 @@ body {
 
   .dashboard-page .reward-grid {
     gap: 8px !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .dashboard-page {
+    overflow-x: hidden !important;
+  }
+
+  .dashboard-page .feature-section {
+    margin-top: 55px !important;
+  }
+
+  .dashboard-page .feature-card {
+    position: static !important;
   }
 }
