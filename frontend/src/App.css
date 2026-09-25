@@ -14,7 +14,7 @@ button {
 }
 
 .dashboard-page {
-  min-height: 100vh;
+  min-height: auto;
   position: relative;
   overflow: hidden;
   background:
@@ -6361,7 +6361,7 @@ body {
 
   /* Prevent fixed bottom nav from covering content */
   .dashboard-page {
-    padding-bottom: 130px !important;
+    padding-bottom: 20px !important;
   }
 
   .dashboard-page .dashboard-footer {
@@ -12052,7 +12052,7 @@ body {
 
   .dashboard-page .dashboard-footer {
     margin-top: 12px !important;
-    padding-bottom: 70px !important;
+    padding-bottom: 10px !important;
   }
 
   .dashboard-page .dashboard-footer p {
@@ -12350,7 +12350,7 @@ body {
    ===================================================== */
 
 .dashboard-page .dashboard-footer {
-  margin-bottom: 90px !important;
+  margin-bottom: 20px !important;
 }
 
 
@@ -12459,7 +12459,7 @@ body {
 
   /* Footer stays above fixed navigation */
   .dashboard-page .dashboard-footer {
-    margin-bottom: 82px !important;
+    margin-bottom: 10px !important;
   }
 
 
@@ -12739,7 +12739,7 @@ body {
 
 .dashboard-page {
   padding-top: 28px !important;
-  padding-bottom: 110px !important;
+  padding-bottom: 20px !important;
 }
 
 .dashboard-page .dashboard-container {
@@ -14294,5 +14294,40 @@ body {
 
   .dashboard-page .feature-card {
     position: static !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .dashboard-page .mobile-greeting {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .dashboard-page {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .dashboard-page .dashboard-container {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .dashboard-page .dashboard-footer {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .dashboard-page .dashboard-container {
+    padding-bottom: 0 !important;
   }
 }

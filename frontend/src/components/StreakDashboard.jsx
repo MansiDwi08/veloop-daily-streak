@@ -186,18 +186,6 @@ function StreakDashboard() {
 
             <main className="dashboard-container">
 
-                {/* Mobile Greeting */}
-                <div className="mobile-greeting">
-                    <div>
-                        <h2>Hi, {user.name || 'Mansi'} 👋</h2>
-                        <p>Keep your streak alive!</p>
-                    </div>
-
-                    <div className="mobile-coin-pill">
-                        <img src="/images/VEs_Coin.png" alt="VE Coin" />
-                        <span>{walletBalance} VE</span>
-                    </div>
-                </div>
 
                 {/* Hero */}
                 <section className="streak-hero">
